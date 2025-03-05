@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Account } from '../types';
+import type { Account } from '@/types';
 
 export const useAccountStore = defineStore('account', () => {
   const accounts = ref<Account[]>([]);

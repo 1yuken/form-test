@@ -1,39 +1,21 @@
-# form-test
+# Форма управления учетными записями
 
-This template should help get you started developing with Vue 3 in Vite.
+Данный проект является тестовым заданием. Задание заключается в создании веб-приложения - формы управления учетными записями
 
-## Recommended IDE Setup
+## Описание функционала
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Основной функционал:
+- **Просмотр информации об учетных записях** (метки, тип записи, логин, пароль).
+- **Удаление/добавление/редактирование** информации об учетных записях.
 
-## Type Support for `.vue` Imports in TS
+А так же сохранение всех изменений при перезагрузке страницы или закрытии браузера.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Запуск проекта
 
-## Customize configuration
+1. Клонируйте репозиторий.
+2. Установите все зависимости и запустите проект следующими командами:
+   **- npm install** 
+   **- npm run dev**
+3. Веб-приложение будет доступно по адресу **localhost:5173**.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+**Стек**: Vue.js, JavaScript, Composition API, Pinia, TailwindCSS, Vite
