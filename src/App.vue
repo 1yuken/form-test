@@ -6,6 +6,7 @@
         <button 
           @click="accountStore.addAccount()" 
           class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xl font-bold"
+          aria-label="Добавить учетную запись"
         >
           +
         </button>
@@ -30,6 +31,7 @@
             <button 
               @click="accountStore.removeAccount(index)"
               class="text-red-500 hover:text-red-700"
+              aria-label="Удалить учетную запись"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -43,9 +45,11 @@
               <input
                 type="text"
                 v-model="account.labelInput"
+                @blur="validateAccount(account)"
                 maxlength="50"
                 placeholder="Введите метки через ;"
                 class="w-full px-3 py-2 border rounded-md"
+                :class="{ 'border-red-500': account.errors.label }"
               />
             </div>
 
@@ -53,7 +57,9 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">Тип записи</label>
               <select
                 v-model="account.type"
+                @change="handleTypeChange(account)"
                 class="w-full px-3 py-2 border rounded-md"
+                :class="{ 'border-red-500': account.errors.type }"
               >
                 <option value="LDAP">LDAP</option>
                 <option value="Локальная">Локальная</option>
@@ -65,9 +71,11 @@
               <input
                 type="text"
                 v-model="account.login"
+                @blur="validateAccount(account)"
                 maxlength="100"
                 placeholder="Введите логин"
                 class="w-full px-3 py-2 border rounded-md"
+                :class="{ 'border-red-500': account.errors.login }"
               />
             </div>
 
@@ -76,9 +84,11 @@
               <input
                 type="password"
                 v-model="account.password"
+                @blur="validateAccount(account)"
                 maxlength="100"
                 placeholder="Введите пароль"
                 class="w-full px-3 py-2 border rounded-md"
+                :class="{ 'border-red-500': account.errors.password }"
               />
             </div>
           </div>
@@ -89,7 +99,43 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useAccountStore } from './stores/accountStore';
+import type { Account } from './types';
 
 const accountStore = useAccountStore();
+
+onMounted(() => {
+  accountStore.loadAccounts();
+});
+
+const validateAccount = (account: Account) => {
+  account.errors = {
+    label: '',
+    type: '',
+    login: '',
+    password: ''
+  };
+
+  if (!account.login.trim()) {
+    account.errors.login = 'Логин обязателен к заполнению';
+  }
+
+  if (account.type === 'Локальная' && !account.password?.trim()) {
+    account.errors.password = 'Пароль обязателен к заполнению';
+  }
+
+  if (!account.errors.label && !account.errors.type && !account.errors.login && !account.errors.password) {
+    accountStore.saveAccount(account);
+  }
+};
+
+const handleTypeChange = (account: Account) => {
+  if (account.type === 'LDAP') {
+    account.password = null;
+  } else {
+    account.password = '';
+  }
+  validateAccount(account);
+};
 </script>
