@@ -18,4 +18,4 @@
    **- npm run dev**
 3. Веб-приложение будет доступно по адресу **localhost:5173**.
 
-**Стек**: Vue.js, JavaScript, Composition API, Pinia, TailwindCSS, Vite
+**Стек**: Vue.js, TypeScript, Composition API, Pinia, TailwindCSS, Vite
